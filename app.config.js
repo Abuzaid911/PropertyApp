@@ -15,7 +15,11 @@ export default {
     },
     scheme: "propertymanagement",
     updates: {
+      url: "https://u.expo.dev/bb665593-48c8-4113-a06a-8a5618e2680b",
       fallbackToCacheTimeout: 0
+    },
+    runtimeVersion: {
+      policy: "appVersion"
     },
     assetBundlePatterns: [
       "**/*"
@@ -61,6 +65,7 @@ export default {
     plugins: [
       "expo-secure-store",
       "expo-web-browser",
+      "expo-updates",
       [
         "expo-build-properties",
         {
