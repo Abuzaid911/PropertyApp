@@ -257,11 +257,26 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
      # Example: If splash.png is missing but splash-icon.png exists
      cp assets/splash-icon.png assets/splash.png
      ```
+   - Ensure Android SDK configuration is correct in app.config.js:
+     ```javascript
+     plugins: [
+       [
+         "expo-build-properties",
+         {
+           "android": {
+             "compileSdkVersion": 35, // Must be at least 35 for latest dependencies
+             "targetSdkVersion": 35,
+             "buildToolsVersion": "35.0.0"
+           }
+         }
+       ]
+     ]
+     ```
+   - If you encounter "checkAarMetadata" errors, it means your Android SDK version is too low
    - Clear the build cache and try again:
      ```bash
      npx eas build --clear-cache -p android --profile preview
      ```
-   - Verify Android SDK configuration is correct in app.config.js
    - Update your EAS CLI:
      ```bash
      npm install -g eas-cli@latest
@@ -345,6 +360,11 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
 6. **"Channel configuration" errors**:
    - These are related to EAS Update. Make sure your app.config.js includes the required configuration
    - If you get this error during build, add the updates and runtimeVersion fields as shown in the EAS Update section
+
+7. **"Android SDK version" errors**:
+   - The error "Execution failed for task ':app:checkReleaseAarMetadata'" indicates SDK version mismatch
+   - Some dependencies require compileSdk version 35 or higher
+   - Update the Android SDK configuration in app.config.js as shown in the build issues section
 
 ## Additional Resources
 
