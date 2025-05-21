@@ -6,7 +6,7 @@ lsof -ti:4000 | xargs kill -9 2>/dev/null
 
 # Start Expo server in the background
 echo "Starting Expo server..."
-npm start -- --port 8081 &
+npx expo start --port 8081 &
 EXPO_PID=$!
 
 # Wait for Expo server to start

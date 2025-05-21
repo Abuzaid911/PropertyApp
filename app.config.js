@@ -50,13 +50,7 @@ export default {
           ],
           category: ["BROWSABLE", "DEFAULT"]
         }
-      ],
-      queries: {
-        packageInstalls: [
-          "ae.uaepass.mainapp",
-          "ae.uaepass.mainapp.stg"
-        ]
-      }
+      ]
     },
     web: {
       favicon: "./assets/favicon.png"
