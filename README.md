@@ -58,6 +58,7 @@ The application uses the following approach:
 - Node.js 14.x or later
 - Expo CLI
 - iOS Simulator (macOS) or Android Emulator
+- ngrok account (for development with UAE Pass)
 
 ## Installation
 
@@ -77,7 +78,6 @@ Create a `.env` file with your UAE Pass credentials:
 ```
 UAE_PASS_CLIENT_ID=your_client_id
 UAE_PASS_CLIENT_SECRET=your_client_secret
-UAE_PASS_REDIRECT_URI=propertymanagement://callback
 ```
 
 ## Configuration
@@ -98,10 +98,39 @@ To handle callbacks from UAE Pass, you must configure a custom URL scheme:
 
 2. The application automatically listens for deep links with this scheme and handles the OAuth redirects.
 
+### Development with ngrok
+
+For development with UAE Pass, you need to use ngrok to expose your local server to the internet, as UAE Pass requires a publicly accessible redirect URI.
+
+1. Install ngrok globally:
+```bash
+npm install -g ngrok
+```
+
+2. Use the provided setup script to start the development environment:
+```bash
+chmod +x setup-ngrok.sh
+./setup-ngrok.sh
+```
+
+This script will:
+- Start the Expo development server
+- Start a proxy server that handles both Expo and the UAE Pass callback
+- Start ngrok to expose your local server
+- Update the `.env` file with the ngrok URL
+
+3. After running the script, your app will use the ngrok URL for UAE Pass redirects.
+
 ## Running the App
 
+For regular development without ngrok:
 ```bash
 npm start
+```
+
+For development with UAE Pass integration:
+```bash
+./setup-ngrok.sh
 ```
 
 Then select your preferred platform (iOS, Android) from the Expo terminal options.

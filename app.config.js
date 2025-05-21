@@ -1,7 +1,9 @@
+import "dotenv/config";
+
 export default {
   expo: {
-    name: "PropertyManagementApp",
-    slug: "PropertyManagementApp",
+    name: "Property Management App",
+    slug: "property-management-app",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
@@ -12,12 +14,15 @@ export default {
       backgroundColor: "#ffffff"
     },
     scheme: "propertymanagement",
+    updates: {
+      fallbackToCacheTimeout: 0
+    },
     assetBundlePatterns: [
       "**/*"
     ],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.example.propertymanagementapp",
+      bundleIdentifier: "com.yourcompany.propertymanagement",
       config: {
         usesNonExemptEncryption: false
       },
@@ -31,16 +36,19 @@ export default {
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
-        backgroundColor: "#ffffff"
+        backgroundColor: "#FFFFFF"
       },
-      package: "com.example.propertymanagementapp",
+      package: "com.yourcompany.propertymanagement",
       intentFilters: [
         {
           action: "VIEW",
-          category: ["DEFAULT", "BROWSABLE"],
-          data: {
-            scheme: "propertymanagement"
-          }
+          autoVerify: true,
+          data: [
+            {
+              scheme: "propertymanagement"
+            }
+          ],
+          category: ["BROWSABLE", "DEFAULT"]
         }
       ],
       queries: {
@@ -59,13 +67,14 @@ export default {
     ],
     extra: {
       uaePass: {
-        clientId: process.env.UAE_PASS_CLIENT_ID || "sandbox_stage",
-        clientSecret: process.env.UAE_PASS_CLIENT_SECRET || "sandbox_stage_secret",
-        redirectUri: "propertymanagement://callback",
+        clientId: "sandbox_stage",
+        clientSecret: "sandbox_stage_secret",
+        redirectUri: process.env.NGROK_URL ? `${process.env.NGROK_URL}/auth/callback` : "propertymanagement://callback",
         authorizationUrl: "https://stg-id.uaepass.ae/idshub/authorize",
         tokenUrl: "https://stg-id.uaepass.ae/idshub/token",
         userInfoUrl: "https://stg-id.uaepass.ae/idshub/userinfo",
-        logoutUrl: "https://stg-id.uaepass.ae/idshub/logout"
+        logoutUrl: "https://stg-id.uaepass.ae/idshub/logout",
+        isDev: true,
       },
       eas: {
         projectId: "your-project-id"
