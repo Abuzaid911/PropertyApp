@@ -133,6 +133,48 @@ npx eas build -p ios --profile production
 
 Note: iOS builds require an Apple Developer account ($99/year). Make sure your Apple Developer account is properly configured in your Expo account before building for iOS.
 
+### Using EAS Update
+
+EAS Update allows you to push JavaScript and asset updates to your app without going through the app store review process or requiring users to download a new version.
+
+#### Configuring EAS Update
+
+The app is already configured for EAS Update in the app.config.js file with:
+
+```javascript
+{
+  "updates": {
+    "url": "https://u.expo.dev/bb665593-48c8-4113-a06a-8a5618e2680b"
+  },
+  "runtimeVersion": {
+    "policy": "appVersion"
+  }
+}
+```
+
+#### Publishing Updates
+
+After making changes to your app, you can publish updates to all users with:
+
+```bash
+npx eas update --auto
+```
+
+Or to a specific channel (like "preview" or "production"):
+
+```bash
+npx eas update --channel preview --message "Bug fixes and performance improvements"
+```
+
+#### Testing Updates
+
+Users with the app installed will receive updates automatically when they open the app (if they're connected to the internet). To test this:
+
+1. Build and install the app on a device
+2. Make changes to the app
+3. Publish an update
+4. Open the app on the device to receive the update
+
 ### Customizing Build Configurations
 
 The build configurations are defined in the `eas.json` file. You can modify these configurations based on your needs:
@@ -254,7 +296,24 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
      npx eas build --clear-cache -p ios --profile preview
      ```
 
-3. **Android installation issues**:
+3. **EAS Update issues**:
+   - Make sure expo-updates is installed:
+     ```bash
+     npx expo install expo-updates
+     ```
+   - Verify your app.config.js has the correct updates configuration:
+     ```javascript
+     updates: {
+       url: "https://u.expo.dev/YOUR_PROJECT_ID",
+       fallbackToCacheTimeout: 0
+     },
+     runtimeVersion: {
+       policy: "appVersion"
+     }
+     ```
+   - If you get "Invalid EAS Update" errors, make sure you're logged in with the correct Expo account
+
+4. **Android installation issues**:
    - If the APK fails to install, make sure "Install from unknown sources" is enabled on the device
    - Some devices may require you to uninstall previous versions first
    - Verify the APK is built for the correct Android SDK version
@@ -274,7 +333,7 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
 4. **"Plugin errors during build"**:
    - Ensure all required plugins are installed:
      ```bash
-     npm install expo-secure-store expo-web-browser expo-build-properties
+     npm install expo-secure-store expo-web-browser expo-build-properties expo-updates
      ```
    - Make sure app.config.js correctly references all plugins
 
@@ -283,10 +342,15 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
    - The current minimum is iOS 15.1
    - If you encounter deployment target errors, update the configuration in app.config.js
 
+6. **"Channel configuration" errors**:
+   - These are related to EAS Update. Make sure your app.config.js includes the required configuration
+   - If you get this error during build, add the updates and runtimeVersion fields as shown in the EAS Update section
+
 ## Additional Resources
 
 - [UAE Pass Developer Documentation](https://docs.uaepass.ae/)
 - [Expo Documentation](https://docs.expo.dev/)
 - [EAS Build Documentation](https://docs.expo.dev/build/introduction/)
+- [EAS Update Documentation](https://docs.expo.dev/eas-update/introduction/)
 - [ngrok Documentation](https://ngrok.com/docs)
 - [Expo Prebuild Documentation](https://docs.expo.dev/workflow/prebuild/) 
