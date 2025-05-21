@@ -204,14 +204,43 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
 
 ### Build Issues
 
-1. **EAS build fails**:
+1. **EAS build fails for Android**:
+   - Make sure all required assets exist:
+     ```bash
+     ls -la assets/
+     # Verify icon.png, adaptive-icon.png, and splash.png exist
+     ```
+   - If any assets are missing, fix them:
+     ```bash
+     # Example: If splash.png is missing but splash-icon.png exists
+     cp assets/splash-icon.png assets/splash.png
+     ```
+   - Clear the build cache and try again:
+     ```bash
+     npx eas build --clear-cache -p android --profile preview
+     ```
+   - Verify Android SDK configuration is correct in app.config.js
+   - Update your EAS CLI:
+     ```bash
+     npm install -g eas-cli@latest
+     ```
+   - You can also perform a local build to debug issues:
+     ```bash
+     npx expo prebuild --platform android
+     cd android
+     ./gradlew assembleDebug
+     ```
+
+2. **EAS build fails for iOS**:
    - Make sure you're logged in with `npx eas login`
    - Verify your Expo account has the correct Apple/Google credentials
    - Check that the bundle identifier/package name is not already in use
+   - iOS builds require a paid Apple Developer account ($99/year)
 
-2. **iOS build requires a paid Apple Developer account**:
-   - iOS builds for real devices (not simulator) require an Apple Developer membership ($99/year)
-   - Android builds can be created with a free Google Play Developer account
+3. **Android installation issues**:
+   - If the APK fails to install, make sure "Install from unknown sources" is enabled on the device
+   - Some devices may require you to uninstall previous versions first
+   - Verify the APK is built for the correct Android SDK version
 
 ### Common Problems
 
@@ -225,9 +254,17 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
    - Check that the ngrok URL is correctly configured in the .env file
    - Verify the proxy server is running
 
+4. **"Plugin errors during build"**:
+   - Ensure all required plugins are installed:
+     ```bash
+     npm install expo-secure-store expo-web-browser expo-build-properties
+     ```
+   - Make sure app.config.js correctly references all plugins
+
 ## Additional Resources
 
 - [UAE Pass Developer Documentation](https://docs.uaepass.ae/)
 - [Expo Documentation](https://docs.expo.dev/)
 - [EAS Build Documentation](https://docs.expo.dev/build/introduction/)
-- [ngrok Documentation](https://ngrok.com/docs) 
+- [ngrok Documentation](https://ngrok.com/docs)
+- [Expo Prebuild Documentation](https://docs.expo.dev/workflow/prebuild/) 

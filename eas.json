@@ -20,17 +20,21 @@
         "simulator": true
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease",
+        "withoutCredentials": false
       },
       "env": {
         "NGROK_URL": "propertymanagement://callback"
-      }
+      },
+      "channel": "preview"
     },
     "production": {
       "autoIncrement": true,
       "env": {
         "NGROK_URL": "propertymanagement://callback"
-      }
+      },
+      "channel": "production"
     }
   },
   "submit": {

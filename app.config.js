@@ -39,6 +39,9 @@ export default {
         backgroundColor: "#FFFFFF"
       },
       package: "com.yourcompany.propertymanagement",
+      permissions: [
+        "INTERNET"
+      ],
       intentFilters: [
         {
           action: "VIEW",
@@ -57,7 +60,20 @@ export default {
     },
     plugins: [
       "expo-secure-store",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "13.0"
+          }
+        }
+      ]
     ],
     extra: {
       uaePass: {
