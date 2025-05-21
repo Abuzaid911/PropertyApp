@@ -236,6 +236,23 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
    - Verify your Expo account has the correct Apple/Google credentials
    - Check that the bundle identifier/package name is not already in use
    - iOS builds require a paid Apple Developer account ($99/year)
+   - Ensure iOS deployment target is at least 15.1 in app.config.js:
+     ```javascript
+     plugins: [
+       [
+         "expo-build-properties",
+         {
+           "ios": {
+             "deploymentTarget": "15.1" // This is the minimum required version
+           }
+         }
+       ]
+     ]
+     ```
+   - If you encounter other iOS build errors, try running:
+     ```bash
+     npx eas build --clear-cache -p ios --profile preview
+     ```
 
 3. **Android installation issues**:
    - If the APK fails to install, make sure "Install from unknown sources" is enabled on the device
@@ -260,6 +277,11 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
      npm install expo-secure-store expo-web-browser expo-build-properties
      ```
    - Make sure app.config.js correctly references all plugins
+
+5. **"iOS deployment target" errors**:
+   - Expo and EAS Build may require specific minimum iOS versions
+   - The current minimum is iOS 15.1
+   - If you encounter deployment target errors, update the configuration in app.config.js
 
 ## Additional Resources
 
