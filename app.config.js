@@ -70,7 +70,7 @@ export default {
             "buildToolsVersion": "33.0.0"
           },
           "ios": {
-            "deploymentTarget": "13.0"
+            "deploymentTarget": "15.1"
           }
         }
       ]
