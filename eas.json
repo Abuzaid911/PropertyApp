@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 3.13.0"
+    "version": ">= 3.13.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -8,6 +9,9 @@
       "distribution": "internal",
       "ios": {
         "simulator": true
+      },
+      "env": {
+        "NGROK_URL": "propertymanagement://callback"
       }
     },
     "preview": {
@@ -17,9 +21,17 @@
       },
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "NGROK_URL": "propertymanagement://callback"
       }
     },
-    "production": {}
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "NGROK_URL": "propertymanagement://callback"
+      }
+    }
   },
   "submit": {
     "production": {}

@@ -71,7 +71,7 @@ export default {
         isDev: true,
       },
       eas: {
-        projectId: "your-project-id"
+        projectId: "bb665593-48c8-4113-a06a-8a5618e2680b"
       }
     }
   }

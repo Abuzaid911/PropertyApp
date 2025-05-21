@@ -92,10 +92,17 @@ To create a standalone version of the app that can be shared with others without
    npm install -g eas-cli
    ```
 
-2. Log in to Expo:
+2. Log in to your Expo account (create one at [expo.dev](https://expo.dev/signup) if you don't have one):
    ```bash
-   npx expo login
+   npx eas login
    ```
+
+3. Configure EAS with your project ID:
+   ```bash
+   npx eas init
+   ```
+   
+   Note: This step is already done for the project (with ID: bb665593-48c8-4113-a06a-8a5618e2680b)
 
 ### Build for Android
 
@@ -124,14 +131,32 @@ For TestFlight distribution:
 npx eas build -p ios --profile production
 ```
 
+Note: iOS builds require an Apple Developer account ($99/year). Make sure your Apple Developer account is properly configured in your Expo account before building for iOS.
+
+### Customizing Build Configurations
+
+The build configurations are defined in the `eas.json` file. You can modify these configurations based on your needs:
+
+- **development**: For development builds that include the Expo development client
+- **preview**: For testing builds that can be shared with teammates (APK for Android, simulator builds for iOS)
+- **production**: For final builds to be published to the App Store or Google Play
+
 ### Sharing Built Apps
 
-1. **Android**: Share the APK file directly with your users
-2. **iOS**: Invite users to TestFlight to download the app
+1. **Android**: 
+   - Share the APK file directly with your users
+   - Users can install it by opening the file on their device
+
+2. **iOS**: 
+   - Invite users to TestFlight through App Store Connect
+   - Users will need to install TestFlight before they can install your app
 
 ### Note on Built Applications
 
-The built applications will use the redirectUri configured in app.config.js. For production builds, you should deploy the proxy server to a stable server with a fixed domain instead of using ngrok.
+The built applications will use the default redirectUri configured in app.config.js (`propertymanagement://callback`). For production builds, you should:
+
+1. Deploy the proxy server to a stable server with a fixed domain instead of using ngrok
+2. Update the app.config.js with your production redirect URI before building
 
 ## Testing UAE Pass Integration
 
@@ -177,6 +202,17 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
 - Ensure the ngrok session is active and the URL is correctly configured
 - For testing, use the UAE Pass staging environment credentials
 
+### Build Issues
+
+1. **EAS build fails**:
+   - Make sure you're logged in with `npx eas login`
+   - Verify your Expo account has the correct Apple/Google credentials
+   - Check that the bundle identifier/package name is not already in use
+
+2. **iOS build requires a paid Apple Developer account**:
+   - iOS builds for real devices (not simulator) require an Apple Developer membership ($99/year)
+   - Android builds can be created with a free Google Play Developer account
+
 ### Common Problems
 
 1. **"Metro bundler not running"**:
@@ -193,4 +229,5 @@ Note that the free ngrok plan generates a new URL each time you start it. You'll
 
 - [UAE Pass Developer Documentation](https://docs.uaepass.ae/)
 - [Expo Documentation](https://docs.expo.dev/)
+- [EAS Build Documentation](https://docs.expo.dev/build/introduction/)
 - [ngrok Documentation](https://ngrok.com/docs) 
